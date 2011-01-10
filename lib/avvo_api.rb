@@ -19,7 +19,7 @@ module AvvoApi
   end
 end
 
-# Post parameters as <tt>{:lawyer => {params...}}</tt> so the server
+# Post parameters as <tt>{:lawyer => {...params...}}</tt> so the server
 # can separate the object's params from the request params
 
 ActiveResource::Base.include_root_in_json = true

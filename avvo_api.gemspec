@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.add_dependency "activeresource", '~> 2.3.10'
   s.add_development_dependency "shoulda", '~> 2.11.3'
   s.add_development_dependency "webmock", '~> 1.6.1'
-  s.add_development_dependency "vcr", "~>1.4.0"
   
   s.rubyforge_project = "avvo_api"
 
