@@ -8,6 +8,7 @@ require 'avvo_api/language'
 require 'avvo_api/specialty'
 require 'avvo_api/headshot'
 require 'avvo_api/advanced_training'
+require 'avvo_api/review'
 
 # The Avvo API Client.
 module AvvoApi

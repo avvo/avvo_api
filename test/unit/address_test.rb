@@ -14,12 +14,12 @@ class AvvoApi::AddressTest < Test::Unit::TestCase
   context "AvvoApi::Address.main" do 
     
     setup do 
-      stub_request(:get, "https://www.avvo.com/api/1/lawyers/1/addresses/main.json").to_return(:body => {:id => '1', :postal_code => '98122'}.to_json)
+      stub_request(:get, "https://api.avvo.com/api/1/lawyers/1/addresses/main.json").to_return(:body => {:id => '1', :postal_code => '98122'}.to_json)
       @address = AvvoApi::Address.main(:lawyer_id => 1)
     end
     
     should "hit the correct url" do
-      assert_requested(:get, "https://www.avvo.com/api/1/lawyers/1/addresses/main.json")
+      assert_requested(:get, "https://api.avvo.com/api/1/lawyers/1/addresses/main.json")
     end
 
     should "setup the object correctly" do 

@@ -8,7 +8,7 @@ module AvvoApi
 
     API_VERSION = 1
     
-    self.site = "https://www.avvo.com/"
+    self.site = "https://api.avvo.com/"
     self.prefix = "/api/#{API_VERSION}/"
     self.format = :json
 

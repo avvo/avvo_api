@@ -19,8 +19,10 @@ end
 # This model has the following attributes:
 #
 #   * id 
-#   * phone_number: The phone number. Will be normalized by Avvo.
-#   * phone_type_id: The type of the phone number, as an AvvoApi::PhoneType constant.
+#   * phone_number:  The phone number. Will be normalized by Avvo.
+#   * phone_type_id: The type of the phone number, as an AvvoApi::PhoneType
+#                    constant. (Only applicable when creating or updating records)
+#   * phone_type:    A string representation of the phone type
 #
 class AvvoApi::Phone < AvvoApi::Base
   belongs_to :address
