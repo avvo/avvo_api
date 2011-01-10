@@ -1,4 +1,5 @@
 require 'avvo_api/base'
+require 'avvo_api/professional_methods'
 require 'avvo_api/lawyer'
 require 'avvo_api/doctor'
 require 'avvo_api/school'

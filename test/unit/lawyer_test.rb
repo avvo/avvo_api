@@ -50,6 +50,19 @@ class AvvoApi::LawyerTest < Test::Unit::TestCase
     end
   end
 
+    context "AvvoApi::Lawyer.search" do 
+    setup do 
+      stub_request(:get, "https://api.avvo.com/api/1/lawyers/search.json?q=dui").to_return(:body => search_results.to_json)
+    end
+
+    should "return a hash of lawyer info" do 
+      @results = AvvoApi::Lawyer.search(:q => 'dui')
+      assert_equal 2, @results["num-results"]
+      assert_equal "Bill T. Lawyer", @results["results"].last["name"]
+      assert_equal "DUI", @results["results"].first["specialties"].first["name"]
+    end
+  end
+
   context "AvvoApi::Lawyer.resolve" do
     
     should "return the appropriate lawyer" do
@@ -95,6 +108,62 @@ class AvvoApi::LawyerTest < Test::Unit::TestCase
       :errors => [
         "Firstname can't be blank"
       ]
+    }
+  end
+
+  def search_results
+    {
+      "num-results" => 2,
+      "results" => [
+        {
+          "id" => 1,
+          "name" => "Bob the Lawyer",
+          "avvo-rating" => 5.0,
+          "client-rating" => 5.0,
+          "client-rating-count" => 10,
+          "specialties" => [
+            {
+              "name" => "DUI",
+              "percent" => 75
+            },
+            {
+              "name" => "Criminal Defense",
+              "percent" => 25
+            }
+          ],
+          "sponsored" => true,
+          "ad_details" => {
+            "tagline" => "I'm the best! Pick me!",
+            "website" => "http://www.avvo.com"
+          },
+          "phone" => "212-555-1212",
+          "address" => "123 Fake St., Seattle, WA 98121",
+          "tiny-image-url" => "http://media.avvo.com/ugc/images/head_shot/tinythumbnail_large/1.jpg",
+          "image-url" => "http://media.avvo.com/ugc/images/head_shot/thumbnail_large/1.jpg",
+          "profile-url" => "http://www.avvo.com/attorneys/1.html",
+          "client-reviews-url" => "http://www.avvo.com/attorneys/1/reviews.html"
+        },
+        {
+          "id" => 2,
+          "name" => "Bill T. Lawyer",
+          "avvo-rating" => 10.0,
+          "client-rating" => 0.0,
+          "client-rating-count" => 0,
+          "specialties" => [
+            {
+              "name" => "DUI",
+              "percent" => 100
+            }
+          ],
+          "sponsored" => false,
+          "phone" => "212-555-1213",
+          "address" => "123 Fake St., Suite 2B, Seattle, WA 98121",
+          "tiny-image-url" => "http://media.avvo.com/ugc/images/head_shot/tinythumbnail_large/2.jpg",
+          "image-url" => "http://media.avvo.com/ugc/images/head_shot/thumbnail_large/2.jpg",
+          "profile-url" => "http://www.avvo.com/attorneys/2.html",
+          "client-reviews-url" => "http://www.avvo.com/attorneys/2/reviews.html"
+        },
+      ],
     }
   end
   
