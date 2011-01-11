@@ -14,7 +14,6 @@
 #   * postal_code
 #   * latitude
 #   * longitude
-#   * license_id: The id of the license (optionally) associated with this address
 # 
 class AvvoApi::Address < AvvoApi::Base
   belongs_to :lawyer
