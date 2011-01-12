@@ -4,10 +4,10 @@ class AvvoApi::LanguageTest < Test::Unit::TestCase
 
   context "AvvoApi::Language" do
     should "belong_to :lawyer" do
-      assert_contains(AvvoApi::Language.belongs_to, :lawyer)
+      assert_contains(AvvoApi::Language.belongs_to.map(&:attribute), :lawyer)
     end
     should "belong_to :doctor" do
-      assert_contains(AvvoApi::Language.belongs_to, :doctor)
+      assert_contains(AvvoApi::Language.belongs_to.map(&:attribute), :doctor)
     end
   end
 
