@@ -129,13 +129,60 @@ module AvvoApi
       parent_prefix + association_prefix
     end
 
+    # Adds methods for belongs_to associations, to make dealing with
+    # these objects a bit more straightforward. If the attribute name
+    # is +lawyer+, it will add:
+    #
+    # * lawyer: returns the actual lawyer object (after doing a web request)
+    # * lawyer_id: returns the lawyer id
+    # * lawyer_id=: sets the lawyer id
+    def self.add_belongs_to_helper_methods(klass, attribute)
+
+      # address.lawyer_id
+      klass.send(:define_method, "#{attribute}_id") do
+        @prefix_options["#{attribute}_id"]
+      end
+
+      # address.lawyer_id = 3
+      klass.send(:define_method, "#{attribute}_id=") do |value|
+        @prefix_options["#{attribute}_id"] = value
+      end
+
+      # Recurse through the parent object. 
+      if AvvoApi.const_defined?(attribute.to_s.capitalize.intern)
+        parent_klass = AvvoApi.const_get(attribute.to_s.capitalize.intern)
+        parent_klass.belongs_to.each do |parent_attribute|
+          add_belongs_to_helper_methods(klass, parent_attribute)
+        end
+
+        # address.lawyer
+        klass.send(:define_method, attribute) do
+          # if the parent has its own belongs_to associations, we need
+          # to add those to the 'find' call. So, let's grab all of
+          # these associations, turn them into a hash of :attr_name =>
+          # attr_id, and fire off the find.
+          parent_params = Hash[parent_klass.belongs_to_with_parents.map {|attr| ["#{attr}_id", send("#{attr}_id")]}]
+          unless instance_variable_get("@#{attribute}")
+            object = parent_klass.find(send("#{attribute}_id"), :params => parent_params )
+            instance_variable_set("@#{attribute}", object)
+          end
+          instance_variable_get("@#{attribute}")
+        end
+      end
+    end
+
     # Add a parent-child relationship between +attribute+ and this
     # class. This allows parameters like +attribute_id+ to contribute to
     # generating nested urls.
     def self.belongs_to(attribute = nil)
       @belongs_to ||= []
       if attribute
-        @belongs_to << "#{attribute}".intern
+        attribute_symbol = "#{attribute}".intern
+        @belongs_to << attribute_symbol
+
+        # spam out some association methods
+        add_belongs_to_helper_methods(self, attribute)
+        
       end
       @belongs_to
     end
@@ -157,7 +204,7 @@ module AvvoApi
       end
       belongs_to_params
     end
-
+    
     def self.parents
       @parents ||= []
     end

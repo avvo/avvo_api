@@ -62,6 +62,26 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
         @object = AvvoApi::Phone.new(:doctor_id => 2, :address_id => 3)
       end
 
+      should "allow setting the prefix options after creation" do
+        @object = AvvoApi::Phone.new
+        @object.doctor_id = 2
+        @object.address_id = 3
+        stub_request(:post, "https://api.avvo.com/api/1/doctors/2/addresses/3/phones.json")
+        @object.save
+        assert_requested(:post, "https://api.avvo.com/api/1/doctors/2/addresses/3/phones.json")
+      end
+
+      should "allow following +belongs_to+ associations" do
+        @object = AvvoApi::Phone.new
+        @object.doctor_id = 2
+        @object.address_id = 3
+        assert_equal 3, @object.address_id
+        stub_request(:get, "https://api.avvo.com/api/1/doctors/2/addresses/3.json").to_return(:body => {:id => '3'}.to_json)
+        @object.address
+        @object.address
+        assert_requested(:get, "https://api.avvo.com/api/1/doctors/2/addresses/3.json", :times => 1)
+      end
+      
       should "hit the Avvo API with the correct URL when saved" do
         stub_request(:post, "https://api.avvo.com/api/1/doctors/2/addresses/3/phones.json")
         @object.save
