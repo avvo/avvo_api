@@ -27,36 +27,40 @@ module AvvoApi
       # * lawyer_id=: sets the lawyer id
       def add_belongs_to_helper_methods(klass, attribute)
 
-        # address.lawyer_id
-        klass.send(:define_method, "#{attribute}_id") do
-          @prefix_options["#{attribute}_id"]
-        end
-
-        # address.lawyer_id = 3
-        klass.send(:define_method, "#{attribute}_id=") do |value|
-          @prefix_options["#{attribute}_id"] = value
-        end
-
-        # Recurse through the parent object.
-        associated_class.belongs_to.each do |parent_attribute|
-          parent_attribute.add_belongs_to_helper_methods(klass, parent_attribute.attribute)
-        end
 
         parent_klass = associated_class # cache this in a scope that the next method's block can see
         parent_attributes = associated_attributes - [attribute]
 
-        # address.lawyer
-        klass.send(:define_method, attribute) do
-          # if the parent has its own belongs_to associations, we need
-          # to add those to the 'find' call. So, let's grab all of
-          # these associations, turn them into a hash of :attr_name =>
-          # attr_id, and fire off the find.
-          parent_params = Hash[parent_attributes.map {|attr| ["#{attr}_id", send("#{attr}_id")]}]
-          unless klass.instance_variable_get("@#{attribute}")
-            object = parent_klass.find(send("#{attribute}_id"), :params => parent_params )
-            klass.instance_variable_set("@#{attribute}", object)
+        klass.class_eval do 
+
+          # address.lawyer_id
+          define_method("#{attribute}_id") do
+            prefix_options["#{attribute}_id".intern]
           end
-          klass.instance_variable_get("@#{attribute}")
+          
+          # address.lawyer_id = 3
+          define_method("#{attribute}_id=") do |value|
+            prefix_options["#{attribute}_id".intern] = value
+          end
+
+          # address.lawyer
+          define_method(attribute) do
+            # if the parent has its own belongs_to associations, we need
+            # to add those to the 'find' call. So, let's grab all of
+            # these associations, turn them into a hash of :attr_name =>
+            # attr_id, and fire off the find.
+            parent_params = Hash[parent_attributes.map {|attr| ["#{attr}_id", send("#{attr}_id")]}]
+            unless instance_variable_get("@#{attribute}")
+              object = parent_klass.find(send("#{attribute}_id"), :params => parent_params )
+              instance_variable_set("@#{attribute}", object)
+            end
+            instance_variable_get("@#{attribute}")
+          end
+        end
+        
+        # Recurse through the parent object.
+        associated_class.belongs_to.each do |parent_attribute|
+          parent_attribute.add_belongs_to_helper_methods(klass, parent_attribute.attribute)
         end
       end
 
