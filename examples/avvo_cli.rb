@@ -23,13 +23,14 @@ elsif !rest.first
 else
   config = YAML.load(File.read(File.expand_path("~/.avvo")))
   AvvoApi.setup(config["user"], config["password"])
+  AvvoApi::Base.site = 'http://localhost.local:3000'
   
   professional = professional_klass.find(rest.first)
 
   address = AvvoApi::Address.main(professional_param => professional.id)
-  phones =  AvvoApi::Phone.find(:all, :params => {professional_param => professional.id, :address_id => address.id})
-  specialties = AvvoApi::Specialty.find(:all, :params => {professional_param => professional.id})
-  reviews = AvvoApi::Review.find(:all, :params => {professional_param => professional.id})
+  phones =  address.phones
+  specialties = professional.specialties
+  reviews = professional.reviews
 
   format = "%12s %s\n"
   puts

@@ -18,6 +18,7 @@
 class AvvoApi::Address < AvvoApi::Base
   belongs_to :lawyer
   belongs_to :doctor
+  has_many :phones
 
   # Returns the 'main' address associated with the passed in
   # professional. This is usually the one you want.

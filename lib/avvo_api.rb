@@ -1,18 +1,20 @@
 require 'avvo_api/base'
 require 'avvo_api/professional_methods'
-require 'avvo_api/lawyer'
-require 'avvo_api/doctor'
-require 'avvo_api/school'
-require 'avvo_api/address'
-require 'avvo_api/phone'
-require 'avvo_api/language'
-require 'avvo_api/specialty'
-require 'avvo_api/headshot'
-require 'avvo_api/advanced_training'
-require 'avvo_api/review'
 
 # The Avvo API Client.
 module AvvoApi
+
+  autoload :Lawyer, 'avvo_api/lawyer'
+  autoload :Doctor, 'avvo_api/doctor'
+  autoload :School, 'avvo_api/school'
+  autoload :Address, 'avvo_api/address'
+  autoload :Phone, 'avvo_api/phone'
+  autoload :Language, 'avvo_api/language'
+  autoload :Specialty, 'avvo_api/specialty'
+  autoload :Headshot, 'avvo_api/headshot'
+  autoload :AdvancedTraining, 'avvo_api/advanced_training'
+  autoload :Review, 'avvo_api/review'
+  
   # Sets up the credentials the ActiveResource objects will use to
   # access the Avvo API. 
   def self.setup(user, password)

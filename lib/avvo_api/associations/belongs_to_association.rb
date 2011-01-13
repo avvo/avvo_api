@@ -17,6 +17,12 @@ module AvvoApi
         end
         attributes.uniq
       end
+
+      def resolve_relationship(object)
+        parent_params = object.prefix_options.dup
+        parent_params.delete("#{attribute}_id".intern)
+        associated_class.find(object.send("#{attribute}_id"), :params => parent_params)
+      end
       
       # Adds methods for belongs_to associations, to make dealing with
       # these objects a bit more straightforward. If the attribute name
@@ -25,14 +31,10 @@ module AvvoApi
       # * lawyer: returns the actual lawyer object (after doing a web request)
       # * lawyer_id: returns the lawyer id
       # * lawyer_id=: sets the lawyer id
-      def add_belongs_to_helper_methods(klass, attribute)
-
-
-        parent_klass = associated_class # cache this in a scope that the next method's block can see
-        parent_attributes = associated_attributes - [attribute]
-
+      def add_helper_methods(klass, attribute)
+        association = self
+        
         klass.class_eval do 
-
           # address.lawyer_id
           define_method("#{attribute}_id") do
             prefix_options["#{attribute}_id".intern]
@@ -49,9 +51,9 @@ module AvvoApi
             # to add those to the 'find' call. So, let's grab all of
             # these associations, turn them into a hash of :attr_name =>
             # attr_id, and fire off the find.
-            parent_params = Hash[parent_attributes.map {|attr| ["#{attr}_id", send("#{attr}_id")]}]
+            
             unless instance_variable_get("@#{attribute}")
-              object = parent_klass.find(send("#{attribute}_id"), :params => parent_params )
+              object = association.resolve_relationship(self)
               instance_variable_set("@#{attribute}", object)
             end
             instance_variable_get("@#{attribute}")
@@ -60,7 +62,7 @@ module AvvoApi
         
         # Recurse through the parent object.
         associated_class.belongs_to.each do |parent_attribute|
-          parent_attribute.add_belongs_to_helper_methods(klass, parent_attribute.attribute)
+          parent_attribute.add_helper_methods(klass, parent_attribute.attribute)
         end
       end
 
@@ -69,7 +71,7 @@ module AvvoApi
         @attribute = attribute
         @options = options
 
-        add_belongs_to_helper_methods(klass, attribute)
+        add_helper_methods(klass, attribute)
       end
     end
   end

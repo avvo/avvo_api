@@ -4,6 +4,7 @@
 # REST stuff and the server-side Rails REST stuff.
 require 'active_resource'
 require 'avvo_api/associations/belongs_to_association'
+require 'avvo_api/associations/has_many_association'
 module AvvoApi
   class Base < ActiveResource::Base
 
@@ -139,6 +140,15 @@ module AvvoApi
         @belongs_to << Associations::BelongsToAssociation.new(self, attribute, options)
       end
       @belongs_to
+    end
+
+    # Add a has_many relationship to another class.
+    def self.has_many(attribute = nil, options = {})
+      @has_many ||= []
+      if attribute
+        @has_many << Associations::HasManyAssociation.new(self, attribute, options)
+      end
+      @has_many
     end
 
     # merges in all of this class' associated classes' belongs_to

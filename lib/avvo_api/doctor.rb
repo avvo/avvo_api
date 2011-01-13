@@ -10,5 +10,11 @@
 #    * profile_url
 #
 class AvvoApi::Doctor < AvvoApi::Base
+  has_many :addresses
+  has_many :reviews
+  has_many :schools
+  has_many :languages
+  has_many :specialties
+  has_many :advanced_trainings
   include AvvoApi::ProfessionalMethods
 end
