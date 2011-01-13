@@ -14,5 +14,6 @@ class AvvoApi::Lawyer < AvvoApi::Base
   has_many :schools
   has_many :languages
   has_many :specialties
+  has_one :headshot
   include AvvoApi::ProfessionalMethods
 end

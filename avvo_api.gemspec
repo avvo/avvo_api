@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.summary     = %q{An ActiveResource client to the Avvo API}
   s.description = %q{An ActiveResource client to the Avvo API}
 
-  s.add_dependency "activeresource", '~> 2.3.10'
   s.add_development_dependency "shoulda", '~> 2.11.3'
   s.add_development_dependency "webmock", '~> 1.6.1'
   

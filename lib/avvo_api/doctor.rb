@@ -16,5 +16,6 @@ class AvvoApi::Doctor < AvvoApi::Base
   has_many :languages
   has_many :specialties
   has_many :advanced_trainings
+  has_one :headshot
   include AvvoApi::ProfessionalMethods
 end

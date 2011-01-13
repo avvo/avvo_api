@@ -29,6 +29,15 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
       end
     end
 
+    context "with a has_one relationship to another object" do
+      should "hit the associated object's URL with the correct parameters when requested" do
+        stub_request(:get, "https://api.avvo.com/api/1/lawyers/1/headshot.json").to_return(:body => {:headshot_url => "blah"}.to_json)
+        @object.id = 1
+        @object.headshot
+        assert_requested(:get, "https://api.avvo.com/api/1/lawyers/1/headshot.json")
+      end
+    end
+
     context "with a belongs_to association and correct parameters" do
       setup do 
         @object = AvvoApi::Specialty.new(:lawyer_id => 2)
