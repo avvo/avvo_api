@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/justinweiss/reactive_resource.git
-  revision: 959e45d266c9415c92e80e4efa17a014cf197d8b
+  revision: 0fe764ababb409e0a717443a366297f9fe886c49
   specs:
     reactive_resource (0.0.1)
       activeresource (~> 2.3.10)

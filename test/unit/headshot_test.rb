@@ -5,11 +5,11 @@ class AvvoApi::HeadshotTest < Test::Unit::TestCase
   context "AvvoApi::Headshot" do
     
     should "belong_to :doctor" do
-      assert_contains(AvvoApi::Headshot.belongs_to.map(&:attribute), :doctor)
+      assert_contains(AvvoApi::Headshot.belongs_to_associations.map(&:attribute), :doctor)
     end
 
     should "belong_to :lawyer" do
-      assert_contains(AvvoApi::Headshot.belongs_to.map(&:attribute), :lawyer)
+      assert_contains(AvvoApi::Headshot.belongs_to_associations.map(&:attribute), :lawyer)
     end
 
     should "get the correct url" do

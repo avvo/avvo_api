@@ -4,7 +4,7 @@ class AvvoApi::PhoneTest < Test::Unit::TestCase
 
   context "AvvoApi::Phone" do
     should "belong_to :address" do
-      assert_contains(AvvoApi::Phone.belongs_to.map(&:attribute), :address)
+      assert_contains(AvvoApi::Phone.belongs_to_associations.map(&:attribute), :address)
     end
     
     should "build successfully with PhoneType constants" do
