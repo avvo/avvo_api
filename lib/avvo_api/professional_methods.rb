@@ -1,12 +1,13 @@
-module AvvoApi::ProfessionalMethods
+module AvvoApi::ProfessionalMethods # :nodoc:
 
+  # Methods that are shared between professionals. 
   module ClassMethods
 
     # Search avvo for a list of the top 10 professionals matching the
     # passed-in parameters. Accepts the following parameters:
     #
-    # q: The search query
-    # loc: The location to search in
+    # [q] The search query
+    # [loc] The location to search in
     #
     # These parameters match the search boxes on the Avvo website.
     #
@@ -27,12 +28,12 @@ module AvvoApi::ProfessionalMethods
     # Attempts to find a professional on Avvo that matches the
     # passed-in params. Currently accepts the following params:
     #
-    # name: The full name of the lawyer you are trying to find
-    # phone: The phone number of the lawyer, in the format XXX-XXX-XXXX
-    # fax: The fax number of the lawyer, in the format XXX-XXX-XXXX
-    # address: The full address of the lawyer
-    # zip_code: The zip code of the lawyer
-    # email_address: The e-mail address of the lawyer
+    # [name] The full name of the lawyer you are trying to find
+    # [phone] The phone number of the lawyer, in the format XXX-XXX-XXXX
+    # [fax] The fax number of the lawyer, in the format XXX-XXX-XXXX
+    # [address] The full address of the lawyer
+    # [zip_code] The zip code of the lawyer
+    # [email_address] The e-mail address of the lawyer
     def resolve(params)
       response = self.get(:resolve, :params => params)
       if response && response[collection_name]

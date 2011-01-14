@@ -1,7 +1,7 @@
 require 'avvo_api/base'
 require 'avvo_api/professional_methods'
 
-# The Avvo API Client.
+# The Avvo API Client. All API models live in this module.
 module AvvoApi
 
   autoload :Lawyer, 'avvo_api/lawyer'
@@ -15,9 +15,9 @@ module AvvoApi
   autoload :AdvancedTraining, 'avvo_api/advanced_training'
   autoload :Review, 'avvo_api/review'
   
-  # Sets up the credentials the ActiveResource objects will use to
-  # access the Avvo API. 
-  def self.setup(user, password)
+  # Tells this client to use +email+ and +password+ to authenticate to
+  # the Avvo API.
+  def self.setup(email, password)
     AvvoApi::Base.password = password
     AvvoApi::Base.user = user
   end
@@ -25,5 +25,4 @@ end
 
 # Post parameters as <tt>{:lawyer => {...params...}}</tt> so the server
 # can separate the object's params from the request params
-
 ActiveResource::Base.include_root_in_json = true

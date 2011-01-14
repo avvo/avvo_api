@@ -1,0 +1,61 @@
+= Avvo API Client
+
+This gem provides an
+{ActiveResource}[http://api.rubyonrails.org/classes/ActiveResource/Base.html]-based
+client to information on {Avvo}[http://www.avvo.com], a directory of lawyers and loctors. 
+
+== Requirements
+
+Apart from the gems installed as dependencies, this gem requires an
+account on Avvo associated with an API key. Visit the {API
+Documentation}[http://api.avvo.com] for details.
+
+== Usage
+
+Somewhere during your app's initialization, you should include the gem
+and set it up with your Avvo credentials:
+
+  require 'avvo_api'
+  AvvoApi.setup('user@avvo.com', 'password')
+
+For the most part, the models supplied by this gem should act like
+ActiveRecord models. These models parallel the resources listed on
+http://api.avvo.com, and everything accessible from the Avvo API is
+accessible using this gem.
+
+== Examples
+
+Details about the specific information returned by these calls can be
+found in the documentation at http://api.avvo.com.
+
+=== Find a lawyer with a known ID
+
+  l = AvvoApi::Lawyer.find(28995)
+
+=== Find a lawyer based on known attributes, like email, zip code, etc.
+
+  l = AvvoApi::Lawyer.resolve(:name => 'Mark Britton', :zip_code => '98101')
+
+=== Search for lawyers matching a keyword in a specific location
+
+  AvvoApi::Lawyer.search(:q => 'criminal defense', :loc => 'seattle')
+
+=== Retrieve the headshot URL for a lawyer
+
+  AvvoApi::Lawyer.find(28995).headshot.headshot_url
+
+or
+
+  AvvoApi::Headshot.find(:one, :params => {:lawyer_id => 28995}).headshot_url
+
+=== Getting a list of addresses for a doctor
+
+  addresses = AvvoApi::Doctor.find(1).addresses
+
+or
+
+  addresses = AvvoApi::Address.find(:all, :params => {:doctor_id => doctor.id})
+
+=== Getting the main address for a doctor
+
+  main_address = AvvoApi::Address.main(:doctor_id => doctor.id)

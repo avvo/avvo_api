@@ -21,7 +21,14 @@ elsif !rest.first
   puts opts
   exit(1)
 else
-  config = YAML.load(File.read(File.expand_path("~/.avvo")))
+  begin
+    config = YAML.load(File.read(File.expand_path("~/.avvo")))
+  rescue
+    puts "Please put your Avvo API credentials in ~/.avvo. This is a simple yaml file, which should look like:
+user: email@domain.com
+password: your_avvo_password"
+    exit(1)
+  end
   AvvoApi.setup(config["user"], config["password"])
   AvvoApi::Base.site = 'http://localhost.local:3000'
   
