@@ -4,4 +4,3 @@ source "http://rubygems.org"
 gemspec
 
 gem "rake"
-gem "reactive_resource", :git => "https://github.com/justinweiss/reactive_resource.git"

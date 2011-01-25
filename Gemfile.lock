@@ -1,14 +1,8 @@
-GIT
-  remote: https://github.com/justinweiss/reactive_resource.git
-  revision: 0fe764ababb409e0a717443a366297f9fe886c49
-  specs:
-    reactive_resource (0.0.1)
-      activeresource (~> 2.3.10)
-
 PATH
   remote: .
   specs:
-    avvo_api (0.0.1)
+    avvo_api (0.1.0)
+      reactive_resource (~> 0.5.0)
 
 GEM
   remote: http://rubygems.org/
@@ -19,6 +13,8 @@ GEM
     addressable (2.2.2)
     crack (0.1.8)
     rake (0.8.7)
+    reactive_resource (0.5.0)
+      activeresource (~> 2.3.10)
     shoulda (2.11.3)
     webmock (1.6.2)
       addressable (>= 2.2.2)
@@ -30,6 +26,6 @@ PLATFORMS
 DEPENDENCIES
   avvo_api!
   rake
-  reactive_resource!
+  reactive_resource (~> 0.5.0)
   shoulda (~> 2.11.3)
   webmock (~> 1.6.1)
