@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
+#
 # A command-line interface to the Avvo API, as an example of how the
-# API can be used.
+# API can be used. Before using the API, you must create a YAML file
+# in ~/.avvo containing your email and password.
 require 'optparse'
 require 'avvo_api'
 
@@ -13,7 +15,7 @@ opts.on("-d", "--doctor", "Get details about a doctor") { professional_klass = A
 rest = opts.parse ARGV
 
 if !professional_klass
-  puts "You must specify either --lawyer or ---doctor"
+  puts "You must specify either --lawyer or --doctor"
   puts opts
   exit(1)
 elsif !rest.first
@@ -25,11 +27,11 @@ else
     config = YAML.load(File.read(File.expand_path("~/.avvo")))
   rescue
     puts "Please put your Avvo API credentials in ~/.avvo. This is a simple yaml file, which should look like:
-user: email@domain.com
+email: email@domain.com
 password: your_avvo_password"
     exit(1)
   end
-  AvvoApi.setup(config["user"], config["password"])
+  AvvoApi.setup(config["email"], config["password"])
   AvvoApi::Base.site = 'http://localhost.local:3000'
   
   professional = professional_klass.find(rest.first)
