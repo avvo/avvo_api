@@ -19,7 +19,7 @@ module AvvoApi
   # the Avvo API.
   def self.setup(email, password)
     AvvoApi::Base.password = password
-    AvvoApi::Base.user = user
+    AvvoApi::Base.user = email
   end
 end
 

@@ -9,4 +9,6 @@ class Test::Unit::TestCase
   include WebMock::API
 end
 
+AvvoApi.setup('test_account@avvo.com', 'password')
+
 WebMock.disable_net_connect!

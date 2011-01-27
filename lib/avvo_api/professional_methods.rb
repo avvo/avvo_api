@@ -18,7 +18,7 @@ module AvvoApi::ProfessionalMethods # :nodoc:
     def search(params)
       response = self.get(:search, params)
       
-      if response && response['num-results']
+      if response && response['num_results']
         response
       else
         raise ActiveResource::ResourceNotFound.new(response)

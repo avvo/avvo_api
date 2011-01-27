@@ -13,7 +13,7 @@ class AvvoApi::PhoneTest < Test::Unit::TestCase
     end
 
     should "be able to return a reasonable string for a phone type id" do
-      stub_request(:get, "https://api.avvo.com/api/1/lawyers/1/addresses/1/phones/1.json").to_return(:body => {:id => 1, :phone_number => '212-555-1212', :phone_type => 'Office', :updated_at => Time.now}.to_json)
+      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/addresses/1/phones/1.json").to_return(:body => {:id => 1, :phone_number => '212-555-1212', :phone_type => 'Office', :updated_at => Time.now}.to_json)
       phone = AvvoApi::Phone.find(1, :params => {:lawyer_id => 1, :address_id => 1})
       assert_equal "Office", phone.phone_type
     end
