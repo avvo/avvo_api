@@ -26,7 +26,9 @@ accessible using this gem.
 == Examples
 
 Details about the specific information returned by these calls can be
-found in the documentation at http://api.avvo.com.
+found in the documentation at http://api.avvo.com. An example of using
+the API in a command-line program can be found in the +examples+
+subdirectory.
 
 === Find a lawyer with a known ID
 
