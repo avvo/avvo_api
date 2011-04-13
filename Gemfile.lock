@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    avvo_api (0.1.0)
+    avvo_api (0.1.1)
       reactive_resource (~> 0.5)
 
 GEM
