@@ -2,7 +2,7 @@
 
 This gem provides an
 {ActiveResource}[http://api.rubyonrails.org/classes/ActiveResource/Base.html]-based
-client to information on {Avvo}[http://www.avvo.com], a directory of lawyers and loctors. 
+client to information on {Avvo}[http://www.avvo.com], a directory of lawyers and doctors. 
 
 == Requirements
 
