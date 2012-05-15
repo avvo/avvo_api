@@ -14,6 +14,7 @@ module AvvoApi
   autoload :Headshot, 'avvo_api/headshot'
   autoload :AdvancedTraining, 'avvo_api/advanced_training'
   autoload :Review, 'avvo_api/review'
+  autoload :User, 'avvo_api/user'
   
   # Tells this client to use +email+ and +password+ to authenticate to
   # the Avvo API.

@@ -13,6 +13,10 @@ module AvvoApi
     self.site = "https://api.avvo.com/"
     self.prefix = "/api/#{API_VERSION}/"
     self.format = :json
+
+    def self.connection=(connection)
+      @connection = connection
+    end
     
   end
 end
