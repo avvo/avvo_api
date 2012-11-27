@@ -1,7 +1,6 @@
-# Represents an address. One of the following attributes MUST
+# Represents an address. The following attribute MUST
 # be set when using this model:
-# 
-# * doctor_id
+#
 # * lawyer_id
 #
 # This model has the following attributes:
@@ -14,10 +13,9 @@
 # * postal_code
 # * latitude
 # * longitude
-# 
+#
 class AvvoApi::Address < AvvoApi::Base
   belongs_to :lawyer
-  belongs_to :doctor
   has_many :phones
 
   # Returns the 'main' address associated with the passed in

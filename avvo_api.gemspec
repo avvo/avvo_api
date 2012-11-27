@@ -12,10 +12,11 @@ Gem::Specification.new do |s|
   s.summary     = %q{An ActiveResource client to the Avvo API}
   s.description = %q{An ActiveResource client to the Avvo API}
 
+  s.add_dependency "activeresource", '~> 3.0.0'
   s.add_dependency "reactive_resource", '~> 0.5'
   s.add_development_dependency "shoulda", '~> 2.11.3'
   s.add_development_dependency "webmock", '~> 1.6.1'
-  
+
   s.rubyforge_project = "avvo_api"
 
   s.files         = `git ls-files`.split("\n")

@@ -2,7 +2,7 @@
 
 This gem provides an
 {ActiveResource}[http://api.rubyonrails.org/classes/ActiveResource/Base.html]-based
-client to information on {Avvo}[http://www.avvo.com], a directory of lawyers and doctors. 
+client to information on {Avvo}[http://www.avvo.com], a directory of lawyers.
 
 == Requirements
 
@@ -50,14 +50,14 @@ or
 
   AvvoApi::Headshot.find(:one, :params => {:lawyer_id => 28995}).headshot_url
 
-=== Getting a list of addresses for a doctor
+=== Getting a list of addresses for a lawyer
 
-  addresses = AvvoApi::Doctor.find(1).addresses
+  addresses = AvvoApi::Lawyer.find(28995).addresses
 
 or
 
-  addresses = AvvoApi::Address.find(:all, :params => {:doctor_id => doctor.id})
+  addresses = AvvoApi::Address.find(:all, :params => {:lawyer_id => lawyer.id})
 
-=== Getting the main address for a doctor
+=== Getting the main address for a lawyer
 
-  main_address = AvvoApi::Address.main(:doctor_id => doctor.id)
+  main_address = AvvoApi::Address.main(:lawyer_id => lawyer.id)

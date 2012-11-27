@@ -6,9 +6,6 @@ class AvvoApi::SpecialtyTest < Test::Unit::TestCase
     should "belong_to :lawyer" do
       assert_contains(AvvoApi::Specialty.belongs_to_associations.map(&:attribute), :lawyer)
     end
-    should "belong_to :doctor" do
-      assert_contains(AvvoApi::Specialty.belongs_to_associations.map(&:attribute), :doctor)
-    end
   end
 
 end

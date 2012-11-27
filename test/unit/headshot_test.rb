@@ -3,10 +3,6 @@ require 'test_helper'
 class AvvoApi::HeadshotTest < Test::Unit::TestCase
 
   context "AvvoApi::Headshot" do
-    
-    should "belong_to :doctor" do
-      assert_contains(AvvoApi::Headshot.belongs_to_associations.map(&:attribute), :doctor)
-    end
 
     should "belong_to :lawyer" do
       assert_contains(AvvoApi::Headshot.belongs_to_associations.map(&:attribute), :lawyer)
@@ -38,7 +34,7 @@ class AvvoApi::HeadshotTest < Test::Unit::TestCase
       @headshot = AvvoApi::Headshot.find(:one, :params => {:lawyer_id => 1})
       stub_request(:delete, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json")
       @headshot.destroy
-      assert_requested(:delete, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json")      
+      assert_requested(:delete, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json")
     end
 
   end
