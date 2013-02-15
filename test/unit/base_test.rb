@@ -15,7 +15,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
     end
 
     should "hit the Avvo API with the correct URL when retrieved" do
-      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1.json").to_return(:body => {:id => '1'}.to_json)
+      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1.json").to_return(:body => {:id => '1', :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
       AvvoApi::Lawyer.find(1)
       assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1.json")
     end
@@ -31,7 +31,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
 
     context "with a has_one relationship to another object" do
       should "hit the associated object's URL with the correct parameters when requested" do
-        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json").to_return(:body => {:headshot_url => "blah"}.to_json)
+        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json").to_return(:body => {:headshot_url => "blah", :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
         @object.id = 1
         @object.headshot
         assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/1/headshot.json")
@@ -50,7 +50,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
       end
 
       should "hit the Avvo API with the correct URL when retrieved" do
-        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/specialties/3.json").to_return(:body => {:id => '3'}.to_json)
+        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/specialties/3.json").to_return(:body => {:id => '3', :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
         AvvoApi::Specialty.find(3, :params => {:lawyer_id => 2})
         assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/specialties/3.json")
       end
@@ -94,7 +94,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
         @object.lawyer_id = 2
         @object.address_id = 3
         assert_equal 3, @object.address_id
-        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3.json").to_return(:body => {:id => '3'}.to_json)
+        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3.json").to_return(:body => {:id => '3', :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
         @object.address
         @object.address
         assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3.json", :times => 1)
@@ -107,7 +107,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
       end
 
       should "hit the Avvo API with the correct URL when updated" do
-        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json").to_return(:body => {:id => '4'}.to_json)
+        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json").to_return(:body => {:id => '4', :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
         phone = AvvoApi::Phone.find(4, :params => {:lawyer_id => 2, :address_id => 3})
         assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json")
 
@@ -125,7 +125,7 @@ class AvvoApi::BaseTest < Test::Unit::TestCase
       end
 
       should "hit the Avvo API with the correct URL when retrieved" do
-        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json").to_return(:body => {:id => '4'}.to_json)
+        stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json").to_return(:body => {:id => '4', :updated_at => '2013-02-10T00:46:12-08:00'}.to_json)
         AvvoApi::Phone.find(4, :params => {:lawyer_id => 2, :address_id => 3})
         assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/2/addresses/3/phones/4.json")
       end

@@ -27,7 +27,7 @@ class AvvoApi::LawyerTest < Test::Unit::TestCase
     end
 
     should "have errors on the firstname attribute" do 
-      assert_match "can't be blank", @lawyer.errors.on(:firstname)
+      assert_match "can't be blank", @lawyer.errors[:firstname].first
     end
   end
 
@@ -66,14 +66,14 @@ class AvvoApi::LawyerTest < Test::Unit::TestCase
   context "AvvoApi::Lawyer.resolve" do
     
     should "return the appropriate lawyer" do
-      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101").to_return(:body => {:lawyers => [{:id => 1}]}.to_json)
+      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101").to_return(:body => {:lawyers => [{:id => 1}], :annotation => nil}.to_json)
       lawyers = AvvoApi::Lawyer.resolve({:name => 'Mark Britton', :zip_code => 98101})
       assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101")
       assert_equal 1, lawyers.length
     end
 
     should "return an empty array if the lawyer can't be found" do
-      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101").to_return(:body => {:lawyers => []}.to_json)
+      stub_request(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101").to_return(:body => {:lawyers => [], :annotation => nil}.to_json)
       lawyers = AvvoApi::Lawyer.resolve({:name => 'Mark Britton', :zip_code => 98101})
       assert_requested(:get, "https://test_account%40avvo.com:password@api.avvo.com/api/1/lawyers/resolve.json?params%5Bname%5D=Mark%20Britton&params%5Bzip_code%5D=98101")
       assert_equal 0, lawyers.length
