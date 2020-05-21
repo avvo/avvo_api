@@ -16,6 +16,7 @@ class AvvoApi::Lawyer < AvvoApi::Base
   has_many :languages
   has_many :specialties
   has_one :headshot
+  has_one :bio
 
   # Search avvo for a list of the top 10 professionals matching the
   # passed-in parameters. Accepts the following parameters:
