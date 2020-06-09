@@ -1,0 +1,45 @@
+---
+version: 2
+jobs:
+  test:
+    docker:
+    - image: circleci/ruby:2.2
+    - image: redis
+    - image: memcached
+    steps:
+    - checkout
+    - run: bundle config packagecloud.io $PACKAGECLOUD_READ_TOKEN
+    - run: bundle install
+    - run: bundle exec rake test
+  build:
+    docker:
+      - image: circleci/ruby:2.2
+    steps:
+      - run: bundle config packagecloud.io $PACKAGECLOUD_READ_TOKEN
+      - run: gem install package_cloud
+      - checkout
+      - run: bundle install
+      # Clean up .gem files from all previous builds
+      - run: rm -f *.gem
+      - run: gem build $(ls *.gemspec)
+      - run: package_cloud push avvo/gems $(ls *.gem)
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only: /.*/
+          context: org-global
+      - build:
+          requires:
+          - test
+          context: org-global
+          filters:
+            tags:
+              only: /v[0-9]+\.[0-9]+\.[0-9]+.*/
+            branches:
+              ignore: /.*/
