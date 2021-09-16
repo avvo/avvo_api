@@ -12,6 +12,7 @@ module AvvoApi
   autoload :Headshot, 'avvo_api/headshot'
   autoload :Review, 'avvo_api/review'
   autoload :Bio, 'avvo_api/bio'
+  autoload :NameAlias, 'avvo_api/name_alias'
 
   # Tells this client to use +email+ and +password+ to authenticate to
   # the Avvo API.

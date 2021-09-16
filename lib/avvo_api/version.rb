@@ -1,3 +1,3 @@
 module AvvoApi
-  VERSION = "0.2.2" # :nodoc:
+  VERSION = "0.2.3pre" # :nodoc:
 end
