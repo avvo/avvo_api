@@ -1,30 +1,29 @@
----
-version: 2
+version: 2.1
+
+orbs:
+  artifact-management: avvo/artifact-management@0.0.6
+
 jobs:
   test:
     docker:
-    - image: circleci/ruby:2.2
-    - image: redis
-    - image: memcached
+      - image: avvo/ruby-testing
+          auth:
+            username: $DOCKERHUB_USER
+            password: $DOCKERHUB_PASS
+
     steps:
-    - checkout
-    - run: bundle config packagecloud.io $PACKAGECLOUD_READ_TOKEN
-    - run: bundle install
-    - run: bundle exec rake test
+      - checkout
+      - artifact-management/gem-test:
+            ruby_versions: "2.2.10,2.3.8,2.4.10,2.5.8,2.6.6"
   build:
     docker:
-      - image: circleci/ruby:2.2
+      - image: circleci/ruby:2.6
     steps:
-      - run: bundle config packagecloud.io $PACKAGECLOUD_READ_TOKEN
-      - run: gem install package_cloud
       - checkout
-      - run: bundle install
-      # Clean up .gem files from all previous builds
-      - run: rm -f *.gem
-      - run: gem build $(ls *.gemspec)
-      - run: package_cloud push avvo/gems $(ls *.gem)
+      - artifact-management/gem-build-and-push
+
 workflows:
-  version: 2
+  version: 2.1
   build-workflow:
     jobs:
       - test:
